@@ -1,9 +1,9 @@
-import { migrate } from "drizzle-orm/postgres-js/migrator";
-import { drizzle } from "drizzle-orm/postgres-js";
-import postgres from "postgres";
+import { drizzle } from 'drizzle-orm/postgres-js';
+import { migrate } from 'drizzle-orm/postgres-js/migrator';
+import postgres from 'postgres';
 
-require("dotenv").config({
-  path: ".env.local",
+require('dotenv').config({
+  path: '.env.local',
 });
 
 const pushMigration = async () => {
@@ -14,7 +14,7 @@ const pushMigration = async () => {
   const migrationDB = drizzle(migrationClient);
 
   await migrate(migrationDB, {
-    migrationsFolder: "./supabase/migrations",
+    migrationsFolder: './supabase/migrations',
   });
 
   await migrationClient.end();

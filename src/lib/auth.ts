@@ -1,9 +1,13 @@
 // src/auth.ts
-import { Lucia } from "lucia";
+import { DrizzlePostgreSQLAdapter } from '@lucia-auth/adapter-drizzle';
+import { Lucia } from 'lucia';
 
-import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
-import { db } from "./database";
-import { session as sessionTable, user as userTable } from "./database/schema";
+import { db } from './database';
+import { session as sessionTable, user as userTable } from './database/schema';
+
+interface DatabaseUserAttributes {
+  username: string;
+}
 
 const adapter = new DrizzlePostgreSQLAdapter(db, sessionTable, userTable); // your adapter
 
@@ -14,24 +18,19 @@ export const lucia = new Lucia(adapter, {
     expires: false,
     attributes: {
       // set to `true` when using HTTPS
-      secure: process.env.NODE_ENV === "production",
+      secure: process.env.NODE_ENV === 'production',
     },
   },
-  getUserAttributes: (attributes) => {
-    return {
-      username: attributes.username,
-    };
-  },
+  getUserAttributes: (attributes) => ({
+    username: attributes.username,
+  }),
 });
 
 // IMPORTANT!
-declare module "lucia" {
+declare module 'lucia' {
+  // eslint-disable-next-line no-unused-vars
   interface Register {
     Lucia: typeof lucia;
     DatabaseUserAttributes: DatabaseUserAttributes;
   }
-}
-
-interface DatabaseUserAttributes {
-  username: string;
 }

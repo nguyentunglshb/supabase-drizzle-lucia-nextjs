@@ -1,12 +1,10 @@
-import React from 'react';
-
-import { signup } from '@/actions/auth';
+import { login } from '@/actions/auth';
 
 export default async function Page() {
   return (
     <>
-      <h1>Create an account</h1>
-      <form action={signup}>
+      <h1>Sign in</h1>
+      <form action={login}>
         <label htmlFor="username">Username</label>
         <input name="username" id="username" />
         <br />
