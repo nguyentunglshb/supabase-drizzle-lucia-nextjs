@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint --max-warnings=0 --fix "
+    "lint": "next lint --max-warnings=0 --fix ",
+    "studio": "yarn drizzle-kit studio --port 3005 --verbose"
   },
   "dependencies": {
     "@lucia-auth/adapter-drizzle": "^1.0.7",
@@ -15,6 +16,8 @@
     "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-switch": "^1.1.0",
+    "@tanstack/react-query": "^5.51.15",
+    "@tanstack/react-virtual": "^3.8.3",
     "add": "^2.0.6",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
@@ -29,6 +32,7 @@
     "postgres": "^3.4.4",
     "react": "^18",
     "react-dom": "^18",
+    "react-spinners": "^0.14.1",
     "shadcn-ui": "^0.8.0",
     "switch": "^0.0.0",
     "tailwind-merge": "^2.4.0",
@@ -36,6 +40,7 @@
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^14.2.5",
+    "@tanstack/eslint-plugin-query": "^5.51.15",
     "@types/node": "^20",
     "@types/pg": "^8.11.6",
     "@types/react": "^18",
