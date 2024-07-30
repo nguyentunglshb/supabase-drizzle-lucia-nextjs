@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { BounceLoader } from 'react-spinners';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import React from 'react';
 
 const MotionLink = motion(Link);
 
@@ -26,15 +27,16 @@ const Gallery = () => {
   return (
     <div className="grid grid-cols-3 mx-auto w-full max-w-screen-lg gap-5 py-20">
       {data?.map((post: any) => (
-        <MotionLink
-          {...LinkAnimated}
-          href={`/post/${post.id}`}
-          key={post.id}
-          className="aspect-square bg-zinc-50 rounded-xl col-span-1"
-        >
-          <p className="font-medium">{post.title}</p>
-          <p>{post.body}</p>
-        </MotionLink>
+        <React.Fragment key={post.id}>
+          <MotionLink
+            {...LinkAnimated}
+            href={`/post/${post.id}`}
+            className="aspect-square bg-zinc-50 rounded-xl col-span-1"
+          >
+            <p className="font-medium">{post.title}</p>
+            <p>{post.body}</p>
+          </MotionLink>
+        </React.Fragment>
       ))}
     </div>
   );

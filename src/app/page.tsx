@@ -1,16 +1,14 @@
 import Image from 'next/image';
 
-import { logout, validateRequest } from '@/actions/auth';
+import { logout } from '@/actions/auth';
 import { Button } from '@/components/ui/button';
 import ThemeSwitch from '@/components/themeSwitch';
-import { db } from '@/lib/database';
-import { user } from '@/lib/database/schema';
+import { getUser } from '@/actions/user';
 
 export default async function Home() {
-  const { user: userLoggedIn } = await validateRequest();
-  const allUser = await db.select().from(user);
+  const user = await getUser();
 
-  console.log({ allUser });
+  console.log({ user });
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -119,7 +117,7 @@ export default async function Home() {
           </p>
         </a>
       </div>
-      {userLoggedIn ? (
+      {user ? (
         <form action={logout}>
           <Button type="submit">Log out</Button>
         </form>
