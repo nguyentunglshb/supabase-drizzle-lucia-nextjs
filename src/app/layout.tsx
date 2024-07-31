@@ -29,7 +29,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={cn('min-h-screen bg-background font-sans antialiased', fontSans.variable)}>
         <Provider>
-          <header className="  fixed  top-2 z-50  px-2 md:top-8 w-full">
+          <header className="fixed  left-0 top-0 z-50 w-full  px-2 py-4 md:top-8">
             <FloatingMenu>
               {Array(4)
                 .fill('_')

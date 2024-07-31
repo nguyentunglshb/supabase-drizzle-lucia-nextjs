@@ -15,6 +15,20 @@
       "when": 1721985400209,
       "tag": "0001_concerned_the_captain",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1722395317927,
+      "tag": "0002_flaky_kabuki",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1722411151691,
+      "tag": "0003_high_lady_ursula",
+      "breakpoints": true
     }
   ]
 }

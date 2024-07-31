@@ -1,4 +1,5 @@
-import { pgTable, text, varchar, timestamp } from 'drizzle-orm/pg-core';
+import { pgTable, text, varchar, timestamp, uuid } from 'drizzle-orm/pg-core';
+import { relations } from 'drizzle-orm/relations';
 
 export const user = pgTable('user', {
   id: text('id').primaryKey(),
@@ -18,3 +19,15 @@ export const session = pgTable('session', {
     mode: 'date',
   }).notNull(),
 });
+
+export const project = pgTable('project', {
+  id: uuid("id").defaultRandom().primaryKey().notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true, mode: "date" }),
+  name: text('name'),
+  data: text("data"),
+  description: text('description'),
+});
+
+export const projectRelations = relations(project, ({many}) => ({
+  user: many(user)
+}))

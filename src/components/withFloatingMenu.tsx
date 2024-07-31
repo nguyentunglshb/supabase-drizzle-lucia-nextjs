@@ -22,7 +22,9 @@ const FloatingMenu: FC<FloatingMenuProps> = ({ children }) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ type: 'spring', stiffness: 50 }}
       style={{ y }}
-      className="flex items-center mx-auto bg-white"
+      className=" mx-auto
+        flex h-12 items-center rounded-full border bg-white/60 px-1 pl-4 shadow-[5px_5px_30px_rgba(190,190,190,0.15),-5px_-5px_30px_rgba(255,255,255,0.15)] backdrop-blur-md 
+      "
     >
       {children}
     </motion.div>

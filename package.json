@@ -7,9 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint --max-warnings=0 --fix ",
+    "migrate": "bun drizzle-kit generate",
+    "push:db": "bun run src/lib/database/migrate.ts",
     "studio": "yarn drizzle-kit studio --port 3005 --verbose"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.9.0",
     "@lucia-auth/adapter-drizzle": "^1.0.7",
     "@neondatabase/serverless": "^0.9.4",
     "@radix-ui/react-dialog": "^1.1.1",
@@ -17,6 +20,7 @@
     "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-switch": "^1.1.0",
+    "@radix-ui/react-toast": "^1.2.1",
     "@tanstack/react-query": "^5.51.15",
     "@tanstack/react-virtual": "^3.8.3",
     "add": "^2.0.6",
@@ -34,11 +38,13 @@
     "postgres": "^3.4.4",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.52.1",
     "react-spinners": "^0.14.1",
     "shadcn-ui": "^0.8.0",
     "switch": "^0.0.0",
     "tailwind-merge": "^2.4.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^14.2.5",
@@ -52,8 +58,10 @@
     "drizzle-kit": "^0.23.0",
     "eslint": "^8.27.0",
     "eslint-config-next": "14.2.5",
+    "eslint-plugin-tailwindcss": "^3.17.4",
     "postcss": "^8",
-    "prettier": "^2.7.1",
+    "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.5",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
