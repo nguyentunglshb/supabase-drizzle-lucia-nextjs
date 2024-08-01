@@ -1,25 +1,15 @@
-'use server'
+'use server';
 
-import { db } from "@/lib/database";
-import { project } from "@/lib/database/schema";
+import { db } from '@/lib/database';
+import { project } from '@/lib/database/schema';
+import { actionClient } from '@/lib/safe-action';
+import { CreateProjectFormSchema } from '@/lib/validations/project';
 
-// import { lucia } from '@/lib/auth';
-// import { cookies } from 'next/headers';
-export const createProject = async (formData: FormData) => {
-    const body = Array.from(formData.entries()).reduce((memo, [key, value]) => ({
-        ...memo,
-        [key]: value,
-      }), {});
-
-
-      const newProject = await db.insert(project).values({
-        ...body
-      })
-
-      console.log({newProject});
-      
-
-      return newProject
-      
-
-}
+export const createProject = actionClient
+  .schema(CreateProjectFormSchema)
+  .action(async ({ parsedInput }) => {
+    return await db
+      .insert(project)
+      .values({ ...parsedInput })
+      .returning();
+  });

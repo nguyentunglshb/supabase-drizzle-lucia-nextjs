@@ -21,13 +21,13 @@ export const session = pgTable('session', {
 });
 
 export const project = pgTable('project', {
-  id: uuid("id").defaultRandom().primaryKey().notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true, mode: "date" }),
+  id: uuid('id').defaultRandom().primaryKey().notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true, mode: 'date' }).defaultNow().notNull(),
   name: text('name'),
-  data: text("data"),
+  data: text('data'),
   description: text('description'),
 });
 
-export const projectRelations = relations(project, ({many}) => ({
-  user: many(user)
-}))
+export const projectRelations = relations(project, ({ many }) => ({
+  user: many(user),
+}));

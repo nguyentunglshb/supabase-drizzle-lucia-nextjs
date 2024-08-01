@@ -47,7 +47,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       <p>Commend</p>
       {commends.map((commend: any) => (
         <div key={commend.id}>
-          <p className="italic font-bold text-sm">{commend.email}</p>
+          <p className="text-sm font-bold italic">{commend.email}</p>
           <p>{commend.body}</p>
         </div>
       ))}

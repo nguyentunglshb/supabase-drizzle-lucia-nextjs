@@ -25,13 +25,13 @@ const Gallery = () => {
   if (isLoading) return <BounceLoader />;
 
   return (
-    <div className="grid grid-cols-3 mx-auto w-full max-w-screen-lg gap-5 py-20">
+    <div className="mx-auto grid w-full max-w-screen-lg grid-cols-3 gap-5 py-20">
       {data?.map((post: any) => (
         <React.Fragment key={post.id}>
           <MotionLink
             {...LinkAnimated}
             href={`/post/${post.id}`}
-            className="aspect-square bg-zinc-50 rounded-xl col-span-1"
+            className="col-span-1 aspect-square rounded-xl bg-zinc-50"
           >
             <p className="font-medium">{post.title}</p>
             <p>{post.body}</p>

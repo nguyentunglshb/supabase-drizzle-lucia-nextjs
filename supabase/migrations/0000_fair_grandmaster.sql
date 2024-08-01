@@ -1,3 +1,11 @@
+CREATE TABLE IF NOT EXISTS "project" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"name" text,
+	"data" text,
+	"description" text
+);
+--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "session" (
 	"id" text PRIMARY KEY NOT NULL,
 	"user_id" text NOT NULL,
@@ -12,7 +20,6 @@ CREATE TABLE IF NOT EXISTS "user" (
 	"password_hash" text
 );
 --> statement-breakpoint
-DROP TABLE "users";--> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "session" ADD CONSTRAINT "session_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
