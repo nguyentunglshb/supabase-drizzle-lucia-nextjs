@@ -16,7 +16,7 @@ import { useToast } from '../ui/use-toast';
 const CreateProjectForm: FC = () => {
   const { executeAsync, isExecuting } = useAction(createProject, {
     onSuccess: ({ data }) => {
-      if (data?.length) {
+      if (!(data instanceof Object)) {
         toast({
           title: 'Success',
           description: 'Project created successfully',
