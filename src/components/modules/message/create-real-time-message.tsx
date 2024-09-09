@@ -1,8 +1,6 @@
 'use client';
 
-import React, { PropsWithChildren, useRef } from 'react';
-
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import React, { useRef } from 'react';
 import { addNewMessage } from '@/actions/message';
 
 type Coordinates = {
@@ -10,11 +8,11 @@ type Coordinates = {
   y: number;
 } | null;
 
-interface CreateRealtimeMessageFormProps extends PropsWithChildren {
+interface CreateRealtimeMessageFormProps {
   coordinates: Coordinates;
 }
 
-export default function CreateRealtimeMessageForm({ children }: CreateRealtimeMessageFormProps) {
+export default function CreateRealtimeMessageForm({ coordinates }: CreateRealtimeMessageFormProps) {
   const messageRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -38,20 +36,24 @@ export default function CreateRealtimeMessageForm({ children }: CreateRealtimeMe
   };
 
   return (
-    <Popover open>
-      <PopoverTrigger>{children}</PopoverTrigger>
-      <PopoverContent>
-        <form onSubmit={_addNewMessage} ref={formRef}>
-          <p>message</p>
-          <input
-            type="text"
-            className="block h-8 rounded-md border"
-            name="message"
-            ref={messageRef}
-          />
-          <button type="submit">Submit</button>
-        </form>
-      </PopoverContent>
-    </Popover>
+    <div
+      className="fixed"
+      style={{
+        top: coordinates?.y + 'px',
+        left: coordinates?.x + 'px',
+      }}
+    >
+      <form onSubmit={_addNewMessage} ref={formRef}>
+        <p>message</p>
+        <input
+          type="text"
+          className="block h-8 rounded-md border"
+          name="message"
+          ref={messageRef}
+          autoFocus
+        />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
   );
 }
