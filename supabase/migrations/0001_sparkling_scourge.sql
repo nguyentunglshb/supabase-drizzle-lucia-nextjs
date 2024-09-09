@@ -1,0 +1,1 @@
+ALTER TABLE "message" ADD COLUMN "color" text DEFAULT 'white' NOT NULL;

@@ -6,7 +6,7 @@ type Coordinates = {
 } | null;
 
 export const useMouseCoordinates = () => {
-  const [mouseCoordinates, setMouseCoordinates] = React.useState<Coordinates>({ x: 0, y: 0 });
+  const [mouseCoordinates, setMouseCoordinates] = React.useState<Coordinates>(null);
 
   const selectMouseCoordinates = (event: React.MouseEvent) => {
     setMouseCoordinates({

@@ -8,6 +8,7 @@ export async function addNewMessage(formData: FormData) {
   const author = formData.get('author');
   const x = formData.get('x');
   const y = formData.get('y');
+  const color = formData.get('color');
 
   if (!message) {
     return {
@@ -20,5 +21,6 @@ export async function addNewMessage(formData: FormData) {
     y: Number(y),
     text: message as string,
     author: author as string,
+    color: color as string,
   });
 }

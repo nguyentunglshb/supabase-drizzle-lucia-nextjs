@@ -5,8 +5,15 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1725872614157,
-      "tag": "0000_giant_lethal_legion",
+      "when": 1725897218099,
+      "tag": "0000_sour_firestar",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1725898134953,
+      "tag": "0001_brave_banshee",
       "breakpoints": true
     }
   ]
