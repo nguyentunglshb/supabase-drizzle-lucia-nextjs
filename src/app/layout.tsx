@@ -4,7 +4,7 @@ import React from 'react';
 import { Inter as FontSans } from 'next/font/google';
 
 import './globals.css';
-import FloatingMenu from '@/components/withFloatingMenu';
+// import FloatingMenu from '@/components/withFloatingMenu';
 import { cn } from '@/lib/utils';
 import dynamic from 'next/dynamic';
 
@@ -29,7 +29,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={cn('min-h-screen bg-background font-sans antialiased', fontSans.variable)}>
         <Provider>
-          <header className="fixed left-0 top-0 z-50 w-full px-2 py-4">
+          {/* <header className="fixed left-0 top-0 z-50 w-full px-2 py-4">
             <FloatingMenu>
               {Array(4)
                 .fill('_')
@@ -37,8 +37,9 @@ export default function RootLayout({
                   <div key={i}>{i}</div>
                 ))}
             </FloatingMenu>
-          </header>
-          <div className="mx-auto w-full max-w-screen-xl">{children}</div>
+          </header> */}
+          {/* <div className="mx-auto w-full max-w-screen-xl">{children}</div> */}
+          <div className="w-full">{children}</div>
         </Provider>
       </body>
     </html>

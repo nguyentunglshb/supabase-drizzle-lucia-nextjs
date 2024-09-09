@@ -9,7 +9,6 @@ import {
   integer,
   bigint,
 } from 'drizzle-orm/pg-core';
-import { relations } from 'drizzle-orm/relations';
 
 export const taskProgressEnum = pgEnum('progress', ['pending', 'inprogress', 'done']);
 export const taskPriorityEnum = pgEnum('priority', ['low', 'medium', 'high', 'urgent']);
@@ -39,7 +38,9 @@ export const project = pgTable('project', {
   name: text('name'),
   data: text('data'),
   description: text('description'),
-  ownerId: text('owner_id'),
+  ownerId: text('owner_id')
+    .notNull()
+    .references(() => user.id),
 });
 
 export const task = pgTable('task', {
@@ -74,38 +75,47 @@ export const usersInProject = pgTable(
   })
 );
 
-export const userRelations = relations(user, ({ one, many }) => ({
-  owner: one(user, {
-    fields: [project.ownerId],
-    references: [user.id],
-  }),
-  usersInProjects: many(usersInProject),
-  task: many(task),
-}));
+export const message = pgTable('message', {
+  id: uuid('id').defaultRandom().primaryKey().notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true, mode: 'date' }).defaultNow().notNull(),
+  text: text('text'),
+  x: integer('x').notNull(),
+  y: integer('y').notNull(),
+  author: text('author').notNull(),
+});
 
-export const projectRelations = relations(project, ({ many }) => ({
-  usersInProject: many(usersInProject),
-}));
+// export const userRelations = relations(user, ({ one, many }) => ({
+//   owner: one(user, {
+//     fields: [project.ownerId],
+//     references: [user.id],
+//   }),
+//   usersInProjects: many(usersInProject),
+//   task: many(task),
+// }));
 
-export const usersInProjectRelations = relations(usersInProject, ({ one, many }) => ({
-  project: one(project, {
-    fields: [usersInProject.projectId],
-    references: [project.id],
-  }),
-  user: one(user, {
-    fields: [usersInProject.userId],
-    references: [user.id],
-  }),
-  task: many(task),
-}));
+// export const projectRelations = relations(project, ({ many }) => ({
+//   usersInProject: many(usersInProject),
+// }));
 
-export const taskRelations = relations(task, ({ one }) => ({
-  owner: one(usersInProject, {
-    fields: [task.ownerId],
-    references: [usersInProject.userId],
-  }),
-  project: one(project, {
-    fields: [task.projectId],
-    references: [project.id],
-  }),
-}));
+// export const usersInProjectRelations = relations(usersInProject, ({ one, many }) => ({
+//   project: one(project, {
+//     fields: [usersInProject.projectId],
+//     references: [project.id],
+//   }),
+//   user: one(user, {
+//     fields: [usersInProject.userId],
+//     references: [user.id],
+//   }),
+//   task: many(task),
+// }));
+
+// export const taskRelations = relations(task, ({ one }) => ({
+//   owner: one(usersInProject, {
+//     fields: [task.ownerId],
+//     references: [usersInProject.userId],
+//   }),
+//   project: one(project, {
+//     fields: [task.projectId],
+//     references: [project.id],
+//   }),
+// }));
