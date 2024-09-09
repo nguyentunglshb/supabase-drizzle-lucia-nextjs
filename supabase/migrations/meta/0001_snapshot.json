@@ -1,6 +1,6 @@
 {
-  "id": "3e2eaa46-0fb4-4d07-8106-5760d4820f7b",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "c9c924f6-5814-49ba-ac24-14e843552440",
+  "prevId": "3e2eaa46-0fb4-4d07-8106-5760d4820f7b",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -20,7 +20,7 @@
           "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+          "default": "CURRENT_TIMESTAMP"
         },
         "text": {
           "name": "text",

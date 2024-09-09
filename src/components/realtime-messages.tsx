@@ -16,6 +16,7 @@ type Message = {
   x: number;
   y: number;
   author: string;
+  color: string;
 };
 
 type Payload = {
@@ -44,8 +45,6 @@ const RealTimeMessages: FC<RealTimeMessagesProps> = ({ serverMessages }) => {
         (payload: Payload) => {
           setMessages((prev) => [...prev, payload.new]);
 
-          console.log(payload.new);
-
           toast(payload.new.text, {
             description: formatDate(payload.new?.created_at) + ' - ' + payload.new?.author,
           });
@@ -60,8 +59,17 @@ const RealTimeMessages: FC<RealTimeMessagesProps> = ({ serverMessages }) => {
 
   return (
     <div className="relative min-h-screen">
-      {mouseCoordinates && <CreateRealtimeMessageForm coordinates={mouseCoordinates} />}
       <CreateAuthor />
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-gray-600 opacity-50 backdrop-blur-md">
+        Left click to add new message - Right click to cancel
+      </div>
+      {mouseCoordinates && (
+        <CreateRealtimeMessageForm
+          key={`${mouseCoordinates.x}${mouseCoordinates.y}`}
+          coordinates={mouseCoordinates}
+          resetCoordinates={() => setMouseCoordinates(null)}
+        />
+      )}
       {messages.map((message) => (
         <SingleMessage key={message.id} {...message} />
       ))}

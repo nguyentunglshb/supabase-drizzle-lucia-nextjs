@@ -1,3 +1,4 @@
+import { sql } from 'drizzle-orm';
 import {
   pgTable,
   text,
@@ -82,6 +83,7 @@ export const message = pgTable('message', {
   x: integer('x').notNull(),
   y: integer('y').notNull(),
   author: text('author').notNull(),
+  color: text('color').notNull().default('white'),
 });
 
 // export const userRelations = relations(user, ({ one, many }) => ({

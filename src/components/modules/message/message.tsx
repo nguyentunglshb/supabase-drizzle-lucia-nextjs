@@ -1,4 +1,5 @@
 import { formatDate } from '@/lib/dayjs';
+import { AnimationProps, motion } from 'framer-motion';
 
 type MessageProps = {
   id: string;
@@ -7,21 +8,30 @@ type MessageProps = {
   x: number;
   y: number;
   author: string;
+  color: string;
 };
 
-const SingleMessage = ({ text, created_at, x, y, author }: MessageProps) => {
+const SingleMessage = ({ text, created_at, x, y, author, color }: MessageProps) => {
+  const animate: AnimationProps['animate'] = {
+    opacity: 1,
+    width: 'auto',
+  };
+
   return (
-    <div
-      className="absolute"
+    <motion.div
+      className="absolute rounded-md border p-3"
       style={{
         top: y + 'px',
         left: x + 'px',
+        background: color,
       }}
+      animate={animate}
     >
-      <p>{text}</p>
+      <p>
+        {text} - <span className="font-medium">{author}</span>
+      </p>
       <p>{formatDate(created_at)}</p>
-      <p>{author}</p>
-    </div>
+    </motion.div>
   );
 };
 

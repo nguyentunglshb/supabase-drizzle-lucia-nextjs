@@ -19,13 +19,23 @@ const CreateAuthor = () => {
   const saveAuthorToLocalStorage = (fd: FormData) => {
     const author = fd.get('author');
 
+    if (author?.toString().length === 0) return;
+
     localStorage.setItem('author', author as string);
 
     setOpen(false);
   };
 
+  const handleOpenChange = (open: boolean) => {
+    if (!open) setOpen(true);
+    else {
+      const author = localStorage.getItem('author');
+      if (author) setOpen(false);
+    }
+  };
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Create Author</DialogTitle>
