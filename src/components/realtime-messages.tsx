@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 import { formatDate } from '@/lib/dayjs';
 import CreateAuthor from './CreateAuthor';
 import SingleMessage from './modules/message/message';
-// import { useMouseCoordinates } from '@/hooks/useMouseCoordinates';
+import { useMouseCoordinates } from '@/hooks/useMouseCoordinates';
 
 type Message = {
   id: string;
@@ -29,7 +29,7 @@ interface RealTimeMessagesProps {
 const RealTimeMessages: FC<RealTimeMessagesProps> = ({ serverMessages }) => {
   const [messages, setMessages] = useState<Array<Message>>(serverMessages);
 
-  // const { selectMouseCoordinates } = useMouseCoordinates();
+  const { mouseCoordinates, setMouseCoordinates, selectMouseCoordinates } = useMouseCoordinates();
 
   useEffect(() => {
     const channel = supabase
@@ -47,14 +47,11 @@ const RealTimeMessages: FC<RealTimeMessagesProps> = ({ serverMessages }) => {
           console.log(payload.new);
 
           toast(payload.new.text, {
-            description: formatDate(payload.new?.created_at),
+            description: formatDate(payload.new?.created_at) + ' - ' + payload.new?.author,
           });
         }
       )
-      .subscribe((status, err) => {
-        if (err) console.error('SUBSCRIPTION ERROR:', err);
-        else console.log('SUBSCRIPTION STATUS CHANGED:', status);
-      });
+      .subscribe();
 
     return () => {
       supabase.removeChannel(channel);
@@ -62,15 +59,20 @@ const RealTimeMessages: FC<RealTimeMessagesProps> = ({ serverMessages }) => {
   }, []);
 
   return (
-    <div className="min-h-screen">
-      <CreateRealtimeMessageForm />
+    <div className="relative min-h-screen">
+      {mouseCoordinates && <CreateRealtimeMessageForm coordinates={mouseCoordinates} />}
       <CreateAuthor />
       {messages.map((message) => (
         <SingleMessage key={message.id} {...message} />
       ))}
-      {messages.map((message) => (
-        <p key={message.id}>{message.text}</p>
-      ))}
+      <div
+        className="absolute inset-0"
+        onClick={selectMouseCoordinates}
+        onContextMenu={(e) => {
+          e.preventDefault();
+          setMouseCoordinates(null);
+        }}
+      ></div>
     </div>
   );
 };
