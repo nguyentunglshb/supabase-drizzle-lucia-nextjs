@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
+import { motion, MotionProps, AnimatePresence } from 'framer-motion';
 
 import { cn } from '@/lib/utils';
+import { BounceLoader } from 'react-spinners';
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50',
+  'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       variant: {
@@ -48,3 +50,62 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 Button.displayName = 'Button';
 
 export { Button, buttonVariants };
+
+type MergedProps = Omit<MotionProps, 'onAnimationStart' | 'children'> &
+  Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onAnimationStart' | 'children'> & {
+    onAnimationStart?:
+      | MotionProps['onAnimationStart']
+      | React.ButtonHTMLAttributes<HTMLButtonElement>['onAnimationStart'];
+    children?: React.ReactNode;
+  };
+
+type AnimatedButtonProps = VariantProps<typeof buttonVariants> &
+  React.ComponentPropsWithoutRef<'button'> &
+  MergedProps & {
+    isLoading?: boolean;
+  };
+
+export const AnimatedButton: React.FC<AnimatedButtonProps> = ({
+  isLoading = false,
+  children,
+  variant,
+  size,
+  className,
+  disabled,
+  onAnimationStart,
+  ...props
+}) => {
+  // Handle the onAnimationStart property to ensure it matches the expected type for motion.button
+  const handleAnimationStart = (definition: any) => {
+    if (typeof onAnimationStart === 'function') {
+      onAnimationStart(definition);
+    }
+  };
+
+  const _disabled = React.useMemo(() => {
+    return disabled || isLoading;
+  }, [isLoading, disabled]);
+
+  return (
+    <motion.button
+      {...props}
+      className={cn(buttonVariants({ variant, size, className }))}
+      disabled={_disabled}
+      onAnimationStart={handleAnimationStart}
+    >
+      {children}
+      <AnimatePresence>
+        {isLoading && (
+          <motion.div
+            initial={{ opacity: 0, width: 0 }}
+            animate={{ opacity: 1, width: 'auto' }}
+            exit={{ opacity: 0, width: 0 }}
+            className="ml-2"
+          >
+            <BounceLoader color="#fff" size={12} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.button>
+  );
+};
